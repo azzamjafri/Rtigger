@@ -1,8 +1,8 @@
-
-import 'dart:math';
-
 import "package:flutter/material.dart";
 import 'package:rtiggers/OrderScreen/OrderPage.dart';
+import 'package:rtiggers/PayIn/payin.dart';
+import 'package:rtiggers/PayOut/payout.dart';
+import 'package:rtiggers/Profile/profile.dart';
 import 'package:rtiggers/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
                 indicatorColor: brownColor,
                 labelColor: brownColor,
                 unselectedLabelColor: Colors.white,
-                physics: NeverScrollableScrollPhysics(),
+                // physics: NeverScrollableScrollPhysics(),
                 controller: tabController,
                 tabs: [
                   Tab(
@@ -66,9 +66,9 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
               controller: tabController,
               children: [
                 OrderPage(),
-                Text("1"),
-                Text("2"),
-                Text("3"),
+                Payout(),
+                Payin(),
+                ProfilePage(),
               ],
             ),
           )

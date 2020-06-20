@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rtiggers/Authentication/authentication.dart';
 import 'package:rtiggers/HomeScreen/HomeScreen.dart';
+import 'package:rtiggers/LoginScreen/registration.dart';
 import 'package:rtiggers/colors.dart';
 
 void main() {
@@ -11,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Rtigger',
       theme: ThemeData(
         primarySwatch: blueColor,
         // This makes the visual density adapt to the platform that you run
@@ -19,7 +22,8 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: AuthService().handleAuth(),
+        // home: RegistrationScreen(),
     );
   }
 }
