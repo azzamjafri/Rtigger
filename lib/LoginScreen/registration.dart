@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rtiggers/Authentication/authentication.dart';
-import 'package:rtiggers/HomeScreen/HomeScreen.dart';
+
 import 'package:rtiggers/LoginScreen/login.dart';
 import 'package:rtiggers/colors.dart';
 
@@ -15,9 +15,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final key = GlobalKey<ScaffoldState>();
   final nameController = new TextEditingController();
   final emailController = new TextEditingController();
-  final passwordController = new TextEditingController();
   final mobileController = new TextEditingController();
   final otpController = new TextEditingController();
+  final dobController = new TextEditingController();
+  final addressController = new TextEditingController();
+  final stateController = new TextEditingController();
+  final cityController = new TextEditingController();
+  final pinCodeController = new TextEditingController();
 
   bool privacyCheck = false;
   bool drinkingCheck = false;
@@ -27,6 +31,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool codeSent = false;
   bool verified = false;
   bool registered = false;
+
   final OTPSnackBar = SnackBar(
     content: Text("OTP Sent !"),
   );
@@ -40,6 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
+      backgroundColor: blueColor,
       body: getBody(),
     );
   }
@@ -51,8 +57,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
+            color: blueColor,
             child: Image.asset(
-              "assets/d.png",
+              "assets/background1.png",
               fit: BoxFit.fill,
             ),
           ),
@@ -71,162 +78,261 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height / 8,
+            height: 8.0,
           ),
           Container(
             height: 100.0,
             width: MediaQuery.of(context).size.width / 2,
-            child: Center(child: new Image.asset('assets/1.png')),
+            child: Center(child: new Image.asset('assets/logo.png')),
           ),
           SizedBox(
-            height: 20.0,
+            height: 10.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: Center(
                 child: new Text('Register',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: brownColor,
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold))),
           ),
           SizedBox(
-            height: 25.0,
+            height: 15.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
-              // textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                    width: 1.8,
-                  ),
-                ),
-                hintText: 'Full Name',
-                hintStyle:
-                    TextStyle(color: blueColor, fontWeight: FontWeight.bold),
-                fillColor: Colors.grey[100],
-                filled: true,
+              style: TextStyle(
+                color: Colors.white,
               ),
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'Full Name',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
               controller: nameController,
               validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
             ),
           ),
           SizedBox(
-            height: 25.0,
+            height: 20.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
-              // textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                    width: 1.8,
-                  ),
-                ),
-                hintText: 'E-Mail Id',
-                hintStyle:
-                    TextStyle(color: blueColor, fontWeight: FontWeight.bold),
-                fillColor: Colors.grey[100],
-                filled: true,
+              style: TextStyle(
+                color: Colors.white,
               ),
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'E-Mail Id',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
               controller: emailController,
-              validator: (val) => val.isEmpty ? 'Enter an email' : null,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
             ),
           ),
           SizedBox(
-            height: 25.0,
+            height: 20.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
-              // textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                    width: 1.8,
-                  ),
-                ),
-                hintText: 'Mobile Number',
-                hintStyle:
-                    TextStyle(color: blueColor, fontWeight: FontWeight.bold),
-                fillColor: Colors.grey[100],
-                filled: true,
+              style: TextStyle(
+                color: Colors.white,
               ),
-              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'Mobile Number',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+                      keyboardType: TextInputType.number,
               controller: mobileController,
-              validator: (val) => val.length != 10
-                  ? 'Enter a valid 10 digit mobile number'
-                  : null,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
             ),
           ),
           SizedBox(
-            height: 25.0,
+            height: 20.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
-              // textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                    width: 1.8,
-                  ),
-                ),
-                hintText: 'Set Password',
-                hintStyle:
-                    TextStyle(color: blueColor, fontWeight: FontWeight.bold),
-                fillColor: Colors.grey[100],
-                filled: true,
+              style: TextStyle(
+                color: Colors.white,
               ),
-              controller: passwordController,
-              validator: (val) => val.length < 6
-                  ? 'Enter a password atleast 6 chars long'
-                  : null,
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'DOB',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+              controller: dobController,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
             ),
           ),
           SizedBox(
-            height: 25.0,
+            height: 20.0,
           ),
           Container(
-            height: 50.0,
+            height: 45.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.grey[200],
-                      width: 1.8,
-                    ),
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'Address',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
                   ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+              controller: addressController,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Container(
+            height: 45.0,
+            width: MediaQuery.of(context).size.width / 1.35,
+            child: new TextFormField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'State',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+              controller: stateController,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Container(
+            height: 45.0,
+            width: MediaQuery.of(context).size.width / 1.35,
+            child: new TextFormField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'City',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+              controller: cityController,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Container(
+            height: 45.0,
+            width: MediaQuery.of(context).size.width / 1.35,
+            child: new TextFormField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  hoverColor: Colors.white,
+                  hintText: 'Pin Code',
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white))),
+              controller: pinCodeController,
+              validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Container(
+            height: 45.0,
+            width: MediaQuery.of(context).size.width / 1.35,
+            child: new TextFormField(
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              decoration: InputDecoration(
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
                   hintText: 'OTP Code',
-                  hintStyle:
-                      TextStyle(color: blueColor, fontWeight: FontWeight.bold),
-                  fillColor: Colors.grey[100],
-                  filled: true,
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
                   suffix: FlatButton(
                       onPressed: () {
                         mobileController.text = mobileController.text.trim();
                         codeSent
                             ? AuthService().signWithOTP(smsCode, verificationId)
                             : verifyPhone("+91" + mobileController.text);
-                                
 
                         if (verified) {
                           setState(() {
@@ -236,9 +342,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       },
                       child: codeSent
                           ? Text("Submit the OTP Code",
-                              style: TextStyle(color: blueColor))
+                              style: TextStyle(color: Colors.white))
                           : Text("Get OTP Code",
-                              style: TextStyle(color: blueColor)))),
+                              style: TextStyle(color: Colors.white)))),
               controller: otpController,
               keyboardType: TextInputType.number,
 
@@ -246,22 +352,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
           SizedBox(
-            height: 25.0,
+            height: 30.0,
           ),
           MaterialButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0)),
             onPressed: () async {
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
               if (_formKey.currentState.validate()) {
                 if (verified) {
                   print('verified man !');
                   if (privacyCheck && drinkingCheck) {
                     print('starting........................................' + smsCode.toString());
-                      // AuthService().signIn(loginKey);
-                    
-
-                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
-                    Navigator.push(context,
+                      Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginPage()));
                   } else {
                     key.currentState.showSnackBar(SnackBar(
@@ -280,7 +384,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             },
             minWidth: MediaQuery.of(context).size.width / 1.35,
             color: brownColor,
-            child: Text("Register", style: TextStyle(color: Colors.white)),
+            child: Text("Send",
+                style: TextStyle(color: Colors.white, fontSize: 22.0)),
             height: 43.0,
           ),
           Padding(
@@ -293,7 +398,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 });
               },
               title: Text('I Agree all Terms & Policies',
-                  style: TextStyle(fontSize: 12.5)),
+                  style: TextStyle(fontSize: 12.5, color: Colors.white)),
               controlAffinity: ListTileControlAffinity.leading,
               checkColor: Colors.white,
               activeColor: Colors.blueGrey,
@@ -310,7 +415,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               },
               title: Text(
                   'I Agree that I have legal drinking age\nas per state domocile',
-                  style: TextStyle(fontSize: 12.5)),
+                  style: TextStyle(fontSize: 12.5, color: Colors.white)),
               controlAffinity: ListTileControlAffinity.leading,
               checkColor: Colors.white,
               activeColor: Colors.blueGrey,
@@ -324,12 +429,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Already have an account ?',
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 17.8)),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.8,
+                      color: Colors.white)),
               GestureDetector(
                 child: Text('Login',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 17.8)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17.8,
+                        color: Colors.white)),
                 onTap: () => Navigator.push(context,
                     new MaterialPageRoute(builder: (context) => LoginPage())),
               )
@@ -346,17 +455,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         (AuthCredential authResult) async {
       // AuthService().signIn(authResult);
       FirebaseAuth.instance.signInWithCredential(authResult).then((user) async {
-
         await FirebaseAuth.instance.currentUser();
-                    await Firestore.instance
-                        .collection('users')
-                        .document(user.user.uid)
-                        .setData({
-                      "email": emailController.text,
-                      "password": passwordController.text,
-                      "phone": mobileController.text,
-                      "username": nameController.text,
-                    });
+        await Firestore.instance
+            .collection('delivery-users')
+            .document(user.user.uid)
+            .setData({
+              "name": nameController.text,
+              "email": emailController.text,
+              "phone": mobileController.text,
+              "dob": dobController.text,
+              "address": addressController.text,
+              "state": stateController.text,
+              "city" : cityController.text,
+              "pin": pinCodeController.text,
+              "id": '',
+              "password": '',
+              "status": '',
+        });
       });
       setState(() async {
         this.verified = true;

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rtiggers/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ActiveOrder extends StatefulWidget {
   @override
@@ -8,6 +11,10 @@ class ActiveOrder extends StatefulWidget {
 }
 
 class _ActiveOrderState extends State<ActiveOrder> {
+  String phoneNo = "7080855524";
+
+  String status = '';
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -33,37 +40,42 @@ class _ActiveOrderState extends State<ActiveOrder> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            color: brownColor,
-                            borderRadius: BorderRadius.circular(20.0),
+                        child: GestureDetector(
+                          onTap: () => setPickupStatus(),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                              color: brownColor,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            height: 30,
+                            width: 70,
+                            child: Center(
+                                child: Text(
+                              "Pickup",
+                              style: TextStyle(color: Colors.white),
+                            )),
                           ),
-                          padding: EdgeInsets.all(5),
-                          height: 30,
-                          width: 70,
-                          // color: brownColor,
-                          child: Center(
-                              child: Text(
-                            "Pickup",
-                            style: TextStyle(color: Colors.white),
-                          )),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            color: brownColor,
-                            borderRadius: BorderRadius.circular(20.0),
+                        child: GestureDetector(
+                          onTap: () => updateDelivery(),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                              color: brownColor,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            height: 30,
+                            width: 70,
+                            child: Center(
+                                child: Text(
+                              "Delivery",
+                              style: TextStyle(color: Colors.white),
+                            )),
                           ),
-                          padding: EdgeInsets.all(5),
-                          height: 30,
-                          width: 70,
-                          child: Center(
-                              child: Text(
-                            "Delivery",
-                            style: TextStyle(color: Colors.white),
-                          )),
                         ),
                       ),
                     ],
@@ -108,17 +120,20 @@ class _ActiveOrderState extends State<ActiveOrder> {
                         child: Text('Medical Address'),
                       ),
                       Expanded(
-                                              child: Container(
+                        child: Container(
                           child: Image.asset("assets/pppp.png"),
                           height: 50.0,
                           width: 50.0,
                         ),
                       ),
                       Expanded(
-                                              child: Container(
-                          child: Image.asset("assets/2.png"),
-                          height: 35.0,
-                          width: 35.0,
+                        child: GestureDetector(
+                          onTap: () => makePhoneCall('tel:$phoneNo'),
+                          child: Container(
+                            child: Image.asset("assets/2.png"),
+                            height: 35.0,
+                            width: 35.0,
+                          ),
                         ),
                       ),
                     ],
@@ -142,10 +157,13 @@ class _ActiveOrderState extends State<ActiveOrder> {
                         height: 50.0,
                         width: 50.0,
                       ),
-                      Container(
-                        child: Image.asset("assets/2.png"),
-                        height: 35.0,
-                        width: 35.0,
+                      GestureDetector(
+                        onTap: () => makePhoneCall('tel:$phoneNo'),
+                        child: Container(
+                          child: Image.asset("assets/2.png"),
+                          height: 35.0,
+                          width: 35.0,
+                        ),
                       ),
                     ],
                   ),
@@ -158,18 +176,105 @@ class _ActiveOrderState extends State<ActiveOrder> {
       Positioned(
         top: MediaQuery.of(context).size.height / 1.8,
         left: MediaQuery.of(context).size.width / 6,
-              child: Container(
-          height: 50.0,
-          width: MediaQuery.of(context).size.width / 2,
-          decoration: BoxDecoration(
-            color: blueColor,
-            borderRadius: BorderRadius.circular(12.0),
+        child: GestureDetector(
+          onTap: () {
+            // showDialog(context: context, builder: (context) => showStatus(context));
+            showDialog(context);
+          },
+          child: Container(
+            height: 50.0,
+            width: MediaQuery.of(context).size.width / 2,
+            decoration: BoxDecoration(
+              color: blueColor,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Center(
+                child: Text('Order Delivered',
+                    style: TextStyle(color: Colors.white))),
           ),
-          child: Center(
-              child: Text('Order Delivered',
-                  style: TextStyle(color: Colors.white))),
         ),
       )
     ]);
+  }
+
+  showStatus(BuildContext context) {
+    return Container(
+      height: 250.0,
+      width: 250.0,
+      child: Text('$status'),
+    );
+  }
+
+  void showDialog(BuildContext context) {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 200,
+            child: SizedBox.expand(
+                child: Material(
+                    type: MaterialType.transparency,
+                    child: Center(
+                      child: Text(
+                        status == '' ? 'Processing order' :
+                        'Order $status Successfully !',
+                        style: TextStyle(color: brownColor, fontSize: 18.0),
+                      ),
+                    ))),
+            margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
+
+  setPickupStatus() async {
+    var user = await FirebaseAuth.instance.currentUser();
+    await Firestore.instance
+        .collection('delivery-users')
+        .document(user.uid)
+        .updateData({
+      'status': 'picked',
+    });
+    setState(() {
+      status = "Picked";
+    });
+  }
+
+  updateDelivery() async {
+    var user = await FirebaseAuth.instance.currentUser();
+    await Firestore.instance
+        .collection('delivery-users')
+        .document(user.uid)
+        .updateData({
+      'status': 'delivered',
+    });
+    setState(() {
+      status = "Delivered";
+    });
+  }
+
+  Future<void> makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

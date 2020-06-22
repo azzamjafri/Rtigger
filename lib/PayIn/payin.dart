@@ -22,13 +22,12 @@ class _PayinState extends State<Payin> {
         Row(children: [Text("2", style: TextStyle(fontWeight: FontWeight.bold))]),
         Padding(padding: const EdgeInsets.only(top: 20.0),),
         Padding(padding: EdgeInsets.only(left: 35.0, bottom: 10.0), child: Row(children: [blueText('Payin', 25.0)],)),
-        Center(
-          child: Container(
-            height: 100.0,
-            width: 100.0,
-            child: Image.asset('assets/1.png',),
-          ),
-
+        Container(
+          height: 100.0,
+          width: MediaQuery.of(context).size.width / 4,
+          child: Center(child: Image.asset('assets/1.png',)),
+          alignment: Alignment.center,
+          
         ),
         Padding(padding: const EdgeInsets.only(top: 20.0),),
         SizedBox(
@@ -41,9 +40,13 @@ class _PayinState extends State<Payin> {
             child: Column(
               children: [
                 Padding(padding: EdgeInsets.all(10.0)),
-                Row(children: [Padding(padding: EdgeInsets.only(left: 15.0), child: blueText('Notifications'),)],),
-                Padding(padding: EdgeInsets.only(left: 20.0, top: 20.0), child: new Text('You Recieved Rs. 4000 Salary'),),
-                Padding(padding: EdgeInsets.only(left: 20.0, top: 20.0), child: new Text('You Recieved Rs. 4000 Salary'),),
+                Align(child: Padding(padding: EdgeInsets.only(left: 15.0), child: blueText('Notifications'),), alignment: Alignment.centerLeft),
+                // Padding(padding: EdgeInsets.only(left: 20.0, top: 20.0), child: new Text('You Recieved Rs. 4000 Salary'),),
+                // Padding(padding: EdgeInsets.only(left: 20.0, top: 20.0), child: new Text('You Recieved Rs. 4000 Salary'),),
+
+                Align(child: Padding(padding: EdgeInsets.only(left: 15.0, top: 10.0), child: new Text('You Recieved Rs. 4000 Salary'),), alignment: Alignment.centerLeft),
+                
+                Align(child: Padding(padding: EdgeInsets.only(left: 15.0, top: 10.0), child: new Text('You Recieved Rs. 4000 Salary'),), alignment: Alignment.centerLeft),
               ],
             ),
           ),

@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:rtiggers/Authentication/authentication.dart';
+import 'package:rtiggers/Profile/edit_email.dart';
+import 'package:rtiggers/Profile/edit_name.dart';
+import 'package:rtiggers/Profile/edit_phone_number.dart';
 
 import '../colors.dart';
 
@@ -38,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: brownColor,
             child: Text("Login",style: TextStyle(color: Colors.white),),
             onPressed: (){
-              AuthService().signOut();
+              // AuthService().signOut();
             },
 
           ),
@@ -61,6 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             FlatButton(
               onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditName()));
                 
               },
               child: ListTile(
@@ -71,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: (){
-               
+               Navigator.push(context, MaterialPageRoute(builder: (context) => EditPhoneNumber()));
               },
               child: ListTile(
                 leading: Image.asset("assets/2.png",height: 40,width: 40,),
@@ -81,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditEmail()));
               },
               child: ListTile(
                 leading: Image.asset("assets/3.png",height: 40,width: 40,),

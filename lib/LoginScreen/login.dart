@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rtiggers/LoginScreen/registration.dart';
 
 import '../HomeScreen/HomeScreen.dart';
 import 'package:rtiggers/colors.dart';
@@ -20,14 +21,14 @@ class _LoginPageState extends State<LoginPage> {
   final key = GlobalKey<ScaffoldState>();
 
   final formKey = GlobalKey<FormState>();
-  
-  String _userNumber="", _password="";
-//   @override
-//   void initState() {
-//     getVerified();
-//     super.initState();
-//  }
-  
+  bool canLogin = false;
+  String _userNumber = "", _password = "";
+
+  @override
+  void initState() {
+    getVerified();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +46,14 @@ class _LoginPageState extends State<LoginPage> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Image.asset(
-              "assets/d.png",
+              "assets/background1.png",
               fit: BoxFit.fill,
             ),
           ),
           Form(
             key: formKey,
-            child: getContents(),  
+            child: getContents(),
           ),
-          
         ],
       ),
     );
@@ -70,9 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             height: 100.0,
             width: MediaQuery.of(context).size.width / 2,
-            child: Center(
-                child: new Image.asset('assets/1.png')
-                ),
+            child: Center(child: new Image.asset('assets/logo.png')),
           ),
           SizedBox(
             height: 20.0,
@@ -83,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
                 child: new Text('Login',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold))),
           ),
@@ -119,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
             height: 50.0,
             width: MediaQuery.of(context).size.width / 1.35,
             child: new TextFormField(
-              
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -129,13 +126,14 @@ class _LoginPageState extends State<LoginPage> {
                     width: 1.8,
                   ),
                 ),
-                
                 hintText: 'Enter Your Password',
                 fillColor: Colors.white,
                 filled: true,
               ),
               controller: passwordController,
-              validator: (val) => val.length <  6 ? 'Enter a valid minimum 6 chars long password' : null,
+              validator: (val) => val.length < 6
+                  ? 'Enter a valid minimum 6 chars long password'
+                  : null,
             ),
           ),
           SizedBox(
@@ -145,42 +143,97 @@ class _LoginPageState extends State<LoginPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0)),
             onPressed: () async {
-              await getVerified();
-              // await key.currentState.showSnackBar(SnackBar(content: Text('Invalid ID'),));
+              var user = await FirebaseAuth.instance.currentUser();
+              await Firestore.instance
+                  .collection('delivery-users')
+                  .document(user.uid)
+                  .get()
+                  .then((value) {
+                print(value.data['password'] + " : - Password of the user");
+                if (passwordController.text == value.data['password']) {
+                  setState(() {
+                    print(value.data['password'] + ' 8**********');
+                    _password = value.data['password'];
+                    canLogin = true;
+                  });
+                }
+              });
+              canLogin
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()))
+                  : key.currentState.showSnackBar(
+                      SnackBar(content: Text('Something went wrong !')));
+              print('**********************' + _password);
+              if (_password == passwordController.text)
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+              else
+                key.currentState.showSnackBar(
+                    SnackBar(content: Text('Something went wrong !')));
+              // Navigator.push(context,MaterialPageRoute(builder: (context) => HomeScreen()));
             },
             minWidth: MediaQuery.of(context).size.width / 1.35,
             color: brownColor,
-            child: Text("Login", style: TextStyle(color: Colors.white)),
+            child: Text("Login",
+                style: TextStyle(color: Colors.white, fontSize: 18.0)),
             height: 43.0,
           ),
+          SizedBox(
+            height: 45.0,
+          ),
+          getRegisterRow(),
         ],
       ),
     );
   }
 
-
+  getRegisterRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        new Text('Don\'t have an account ? '),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => RegistrationScreen()));
+          },
+          child:
+              Text('Register', style: TextStyle(fontWeight: FontWeight.bold)),
+        )
+      ],
+    );
+  }
 
   getVerified() async {
-    
-    Firestore.instance.collection('users').getDocuments().then((doc) {
-      doc.documents.forEach((element) {
-        print(element.data['phone'] + "****************" + idController.text);
-        print(idController.text.compareTo(element.data['phone']));
-        if(idController.text.compareTo(element.data['phone']) == 0){
-          
-          
-          
-          if(passwordController.text.compareTo(element.data['password']) == 0){
-            Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
-          }else{
-            key.currentState.showSnackBar(SnackBar(content: Text('Invalid password'),));
-          }
-          
-        }
-      });
-    });
-    setState(() {
-      key.currentState.showSnackBar(SnackBar(content: Text('Invalid ID'),));
+    // Firestore.instance.collection('users').getDocuments().then((doc) {
+    //   doc.documents.forEach((element) {
+    //     print(element.data['phone'] + "****************" + idController.text);
+    //     print(idController.text.compareTo(element.data['phone']));
+    //     if(idController.text.compareTo(element.data['phone']) == 0){
+
+    //       if(passwordController.text.compareTo(element.data['password']) == 0){
+    //         Navigator.pushAndRemoveUntil(context, new MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+    //       }else{
+    //         key.currentState.showSnackBar(SnackBar(content: Text('Invalid password'),));
+    //       }
+
+    //     }
+    //   });
+    // });
+
+    var user = await FirebaseAuth.instance.currentUser();
+    await Firestore.instance
+        .collection('delivery-users')
+        .document(user.uid)
+        .get()
+        .then((value) {
+      print(value.data['password'] + " : - Password of the user");
+      if (passwordController.text == value.data['password']) {
+        setState(() {
+          print(value.data['password'] + ' 8**********');
+          _password = value.data['password'];
+          canLogin = true;
+        });
+      }
     });
   }
 }

@@ -40,7 +40,6 @@ class _OrderPageState extends State<OrderPage> with SingleTickerProviderStateMix
       controller: tabView,
       tabs: [
         Tab(
-
           icon: getTabHeader("New Order"),
         ),
         Tab(
@@ -65,6 +64,6 @@ class _OrderPageState extends State<OrderPage> with SingleTickerProviderStateMix
   }
 
   getTabHeader(String field) {
-    return Text(field,style: TextStyle(color: blueColor,fontWeight: FontWeight.bold,fontSize: 14),);
+    return Text(field, style: TextStyle(color: blueColor,fontWeight: FontWeight.bold,fontSize: 12.5),);
   }
 }

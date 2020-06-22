@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rtiggers/LoginScreen/login.dart';
 
-import 'package:rtiggers/LoginScreen/registration.dart';
+
 
 import '../HomeScreen/HomeScreen.dart';
 
@@ -16,7 +17,7 @@ class AuthService {
           return HomeScreen();
         else
 
-          return RegistrationScreen();
+          return LoginPage();
       }, 
     );
   }
