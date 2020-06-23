@@ -1,12 +1,18 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:rtiggers/Authentication/authentication.dart';
+
 import 'package:rtiggers/Profile/edit_email.dart';
 import 'package:rtiggers/Profile/edit_name.dart';
 import 'package:rtiggers/Profile/edit_phone_number.dart';
+import 'package:rtiggers/Profile/notifications.dart';
+import 'package:rtiggers/Profile/privacy_policy.dart';
+import 'package:rtiggers/Profile/rate_us.dart';
+import 'package:rtiggers/Profile/settings.dart';
+import 'package:rtiggers/Profile/share.dart';
 
 import '../colors.dart';
+import 'contact_us.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -34,16 +40,36 @@ class _ProfilePageState extends State<ProfilePage> {
         Align(
           alignment: Alignment(0,-.6),
           
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)
-            ),
-            color: brownColor,
-            child: Text("Login",style: TextStyle(color: Colors.white),),
-            onPressed: (){
-              // AuthService().signOut();
-            },
+          child: Column(
+            children: [
+              SizedBox(height: 10.0,),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
+                  width: 70.0,
+                  height: 70.0,
+                  child: new Image.asset('assets/ok.png'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text('Welcome to Rtiggers', style: TextStyle(color: Colors.white, fontSize: 17.0),),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  color: brownColor,
+                  child: Text("Login",style: TextStyle(color: Colors.white),),
+                  onPressed: (){
+                    // AuthService().signOut();
+                  },
 
+                ),
+              ),
+            ],
           ),
         ),
         Align(
@@ -95,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
               },
               child: ListTile(
                 leading: Image.asset("assets/4.png",height: 40,width: 40,),
@@ -105,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RateUs()));
               },
               child: ListTile(
                 leading: Image.asset("assets/5.png",height: 40,width: 40,),
@@ -115,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Share()));
               },
               child: ListTile(
                 leading: Image.asset("assets/6.png",height: 40,width: 40,),
@@ -125,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicy()));
               },
               child: ListTile(
                 leading: Image.asset("assets/7.png",height: 40,width: 40,),
@@ -135,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
               },
               child: ListTile(
                 leading: Image.asset("assets/8.png",height: 40,width: 40,),
@@ -145,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             FlatButton(
               onPressed: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()));
               },
               child: ListTile(
                 leading: Image.asset("assets/9.png",height: 40,width: 40,),

@@ -468,9 +468,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               "state": stateController.text,
               "city" : cityController.text,
               "pin": pinCodeController.text,
-              "id": '',
-              "password": '',
+              "id": mobileController.text,
+              "password": 'test123',
               "status": '',
+              "notifications": false,
         });
       });
       setState(() async {
