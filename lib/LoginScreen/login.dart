@@ -94,15 +94,22 @@ class _LoginPageState extends State<LoginPage> {
             child: new TextFormField(
               textAlign: TextAlign.center,
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey[200],
+                    width: 1.8,
+                  ),
+                ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   borderSide: BorderSide(
                     color: Colors.grey[200],
                     width: 1.8,
                   ),
                 ),
                 hintText: 'Enter Your ID',
-                fillColor: Colors.white,
+                fillColor: Colors.grey[200],
                 filled: true,
               ),
               controller: idController,
@@ -119,8 +126,16 @@ class _LoginPageState extends State<LoginPage> {
             child: new TextFormField(
               textAlign: TextAlign.center,
               decoration: InputDecoration(
+                
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey[200],
+                    width: 1.8,
+                  ),
+                ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   borderSide: BorderSide(
                     color: Colors.grey[200],
                     width: 1.8,
@@ -141,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           MaterialButton(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0)),
+                borderRadius: BorderRadius.circular(12.0)),
             onPressed: () async {
               var user = await FirebaseAuth.instance.currentUser();
               await Firestore.instance

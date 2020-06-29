@@ -54,13 +54,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return SingleChildScrollView(
       child: Stack(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: blueColor,
-            child: Image.asset(
-              "assets/background1.png",
-              fit: BoxFit.fill,
+          Positioned(
+            bottom: 0.0,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: blueColor,
+              child: Image.asset(
+                "assets/background1.png",
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           Form(
@@ -172,7 +175,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       borderSide: BorderSide(color: Colors.white)),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white))),
-                      keyboardType: TextInputType.number,
+              keyboardType: TextInputType.number,
               controller: mobileController,
               validator: (val) => val.isEmpty ? 'Name can not be empty' : null,
             ),
@@ -364,8 +367,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 if (verified) {
                   print('verified man !');
                   if (privacyCheck && drinkingCheck) {
-                    print('starting........................................' + smsCode.toString());
-                      Navigator.push(context,
+                    print('starting........................................' +
+                        smsCode.toString());
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) => LoginPage()));
                   } else {
                     key.currentState.showSnackBar(SnackBar(
@@ -460,18 +464,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             .collection('delivery-users')
             .document(user.user.uid)
             .setData({
-              "name": nameController.text,
-              "email": emailController.text,
-              "phone": mobileController.text,
-              "dob": dobController.text,
-              "address": addressController.text,
-              "state": stateController.text,
-              "city" : cityController.text,
-              "pin": pinCodeController.text,
-              "id": mobileController.text,
-              "password": 'test123',
-              "status": '',
-              "notifications": false,
+          "name": nameController.text,
+          "email": emailController.text,
+          "phone": mobileController.text,
+          "dob": dobController.text,
+          "address": addressController.text,
+          "state": stateController.text,
+          "city": cityController.text,
+          "pin": pinCodeController.text,
+          "id": mobileController.text,
+          "password": 'test123',
+          "status": '',
+          "notifications": false,
         });
       });
       setState(() async {

@@ -55,20 +55,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(4.0),
                 child: Text('Welcome to Rtiggers', style: TextStyle(color: Colors.white, fontSize: 17.0),),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  color: brownColor,
-                  child: Text("Login",style: TextStyle(color: Colors.white),),
-                  onPressed: (){
-                    // AuthService().signOut();
-                  },
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: MaterialButton(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10)
+              //     ),
+              //     color: brownColor,
+              //     child: Text("Login",style: TextStyle(color: Colors.white),),
+              //     onPressed: (){
+              //       // AuthService().signOut();
+              //     },
 
-                ),
-              ),
+              //   ),
+              // ),
             ],
           ),
         ),
